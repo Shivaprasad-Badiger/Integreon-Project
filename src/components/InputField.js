@@ -2,17 +2,18 @@ import React from "react";
 import styled from "styled-components";
 import { Box, TextField } from "@mui/material";
 
-function InputField({ label, setFunction}) {
+function InputField({ label, value, setFunction}) {
   return (
     <Box sx={{ width: "100%" }}>
       <StyledTextField
         label={label}
         fullWidth
-        size="small"
+        size= "small"
+        value={value}
         onChange={(e) => {
           setFunction(e.target.value);
         }}
-        // required
+        required
       ></StyledTextField>
     </Box>
   );

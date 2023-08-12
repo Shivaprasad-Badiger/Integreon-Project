@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { styled } from "styled-components";
 
-function StyledPhoneNumber() {
-  const [num, setNum] = useState("");
+function StyledPhoneNumber({phNo, setPhNo}) {
 
   const inputStyle = {
     width: "100%",
@@ -25,8 +24,10 @@ function StyledPhoneNumber() {
     <div style={{ textAlign: "left" }}>
       <PhoneInput
         country={"in"}
-        value={num}
-        onChange={(num) => setNum(num)}
+        onChange={(num) => {
+          setPhNo(num);
+        }}
+        value={phNo}
         placeholder="Mobile Number"
         inputProps={{
           style: inputStyle,
