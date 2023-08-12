@@ -23,13 +23,13 @@ function AddMember() {
   // edit section
   const [isEdit, setIsEdit] = useState(0);
   const [editableId, setEditableId] = useState(null);
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(1);
   // optional chaining
   const columns = [
     {
       title: "Action",
       key: "action",
-      render : (_, __, index) => (page - 1) * 4 + index+1
+      render: (_, __, index) => (page - 1) * 4 + index + 1,
     },
     {
       dataIndex: "firstName",
@@ -138,7 +138,7 @@ function AddMember() {
             if (!isEdit) {
               setDataSet([...dataSet, data]);
               setFunction({
-                slNo: slNo+1,
+                slNo: slNo + 1,
                 firstName: "",
                 lastName: "",
                 email: "",
@@ -185,7 +185,12 @@ function AddMember() {
             value={lastName}
             setFunction={setlastName}
           />
-          <InputField label={"Email"} value={email} setFunction={setEmail} />
+          <InputField
+            label={"Email"}
+            value={email}
+            setFunction={setEmail}
+            type={"email"}
+          />
           <DropdownElement
             label={"Department/BU"}
             arr={Department}
@@ -279,7 +284,7 @@ function AddMember() {
             </SerachDiv>
           </TableHeader>
 
-          <TableSection send={dataSet} columns={columns} setPage={setPage}/>
+          <TableSection send={dataSet} columns={columns} setPage={setPage} />
         </div>
       </SubDiv>
     </MainDiv>

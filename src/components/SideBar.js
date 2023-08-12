@@ -11,7 +11,7 @@ import styled from "styled-components";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
-import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
+import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 import { Link } from "react-router-dom";
 
 const SideBar = ({ validate }) => {
@@ -20,18 +20,17 @@ const SideBar = ({ validate }) => {
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
     setWidth(collapsed ? "15%" : "4%");
-    console.log("collapsed", collapsed);
   };
   const NavArr = [
     {
       name: "Dashboard",
       path: "/DashBoard",
-      icon: <DashboardOutlinedIcon sx={{ color: "white" }} />
+      icon: <DashboardOutlinedIcon sx={{ color: "white" }} />,
     },
     {
       name: "Add Member",
       path: "/AddMember",
-      icon: <PersonAddAltOutlinedIcon sx={{ color: "white" }} />
+      icon: <PersonAddAltOutlinedIcon sx={{ color: "white" }} />,
     },
   ];
   return (
@@ -46,7 +45,7 @@ const SideBar = ({ validate }) => {
               width: width,
               boxSizing: "border-box",
               display: "block",
-              overflow: "hidden",
+              // overflow: "hidden",
               height: "90vh",
               marginTop: "10vh",
             },
@@ -63,14 +62,17 @@ const SideBar = ({ validate }) => {
                   style={{
                     color: "white",
                     textDecoration: "none",
+                    width:"100%",
+                    display:"flex",
+                    justifyContent:"center",
+                    alignItems:"center",
+                    margin:"10px"
                   }}
                 >
-                  <ListItemButton>
-                    <ListItemIcon>
-                      {data.icon}
-                    </ListItemIcon>
-                    {!collapsed && <ListItemText primary={data.name} />}
-                  </ListItemButton>
+                  <Button>
+                    {data.icon}
+                    {!collapsed && <StyledSpan>{data.name}</StyledSpan>}
+                  </Button>
                 </Link>
               </ListItem>
             ))}
@@ -99,3 +101,16 @@ const DrawerHeader = styled.div`
   bottom: 50px;
   background-color: #3a364d;
 `;
+const Button = styled.button`
+  display: flex;
+  background: none;
+  border: none;
+  width: 100%;
+  height: 20px;
+  color: white;
+  gap: 30px;
+  align-items: center;
+`;
+const StyledSpan = styled.span`
+  font-size: 16px;
+`
