@@ -4,9 +4,6 @@ import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import IconButton from "@mui/material/IconButton";
 import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import styled from "styled-components";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
@@ -62,11 +59,11 @@ const SideBar = ({ validate }) => {
                   style={{
                     color: "white",
                     textDecoration: "none",
-                    width:"100%",
-                    display:"flex",
-                    justifyContent:"center",
-                    alignItems:"center",
-                    margin:"10px"
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    margin: "10px",
                   }}
                 >
                   <Button>
@@ -113,4 +110,4 @@ const Button = styled.button`
 `;
 const StyledSpan = styled.span`
   font-size: 16px;
-`
+`;

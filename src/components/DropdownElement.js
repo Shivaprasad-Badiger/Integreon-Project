@@ -2,13 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Box, TextField, MenuItem } from "@mui/material";
 
 function DropdownElement({ label, arr, value, setFunction }) {
-  const [element, setElement] = useState(null);
+  const [element, setElement] = useState("");
   useEffect(() => {
-    value && value === "" ? setElement("") : setElement(arr.indexOf(value));
-  }, [value]);
+    setElement(value ? arr.indexOf(value) : "");
+  }, [arr, value]);
   const handleChange = (e) => {
-    setElement(e.target.value);
-    setFunction && setFunction(arr[e.target.value]);
+    const selectedIndex = e.target.value;
+    console.log(selectedIndex);
+    setElement(selectedIndex);
+    if (setFunction && selectedIndex >= 0 && selectedIndex < arr.length) {
+      setFunction(arr[selectedIndex])
+    }
   };
   return (
     <Box sx={{ width: "100%" }}>
@@ -20,7 +24,7 @@ function DropdownElement({ label, arr, value, setFunction }) {
         fullWidth
         size="small"
         select
-        // required
+      // required
       >
         {arr.map((ele, id) => (
           <MenuItem value={id}>{ele}</MenuItem>

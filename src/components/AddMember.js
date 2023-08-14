@@ -12,7 +12,7 @@ import { InputBase } from "@mui/material";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import { Space } from "antd";
 import { PencilSquare, Trash } from "react-bootstrap-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function AddMember() {
   let Department = ["Human Resource", "Developement", "Testing", "Devops"];
@@ -27,8 +27,8 @@ function AddMember() {
   // optional chaining
   const columns = [
     {
-      title: "Action",
-      key: "action",
+      title: "Sl. No",
+      key: "slNo",
       render: (_, __, index) => (page - 1) * 4 + index + 1,
     },
     {
@@ -56,7 +56,7 @@ function AddMember() {
                   setEditableId(index);
                 }
               });
-              setFunction(record);
+              datasetFunction(record);
             }}
           >
             <PencilSquare color="#88dad8" fontSize="20px" />
@@ -82,7 +82,6 @@ function AddMember() {
     setDataSet(updatedItems);
   };
   const [
-    [slNo, setSlNo],
     [firstName, setfirstName],
     [lastName, setlastName],
     [email, setEmail],
@@ -91,17 +90,15 @@ function AddMember() {
     [phNo, setPhNo],
     [team, setTeam],
   ] = [
-    useState(0),
-    useState(""),
-    useState(""),
-    useState(""),
-    useState(""),
-    useState(""),
-    useState(""),
-    useState(""),
-  ];
-  const setFunction = (setValues) => {
-    setSlNo(slNo + 1);
+      useState(""),
+      useState(""),
+      useState(""),
+      useState(""),
+      useState(""),
+      useState(""),
+      useState(""),
+    ];
+  const datasetFunction = (setValues) => {
     setfirstName(setValues.firstName);
     setlastName(setValues.lastName);
     setEmail(setValues.email);
@@ -112,7 +109,6 @@ function AddMember() {
   };
 
   let data = {
-    slNo: slNo,
     firstName: firstName,
     lastName: lastName,
     email: email,
@@ -137,8 +133,7 @@ function AddMember() {
             e.preventDefault();
             if (!isEdit) {
               setDataSet([...dataSet, data]);
-              setFunction({
-                slNo: slNo + 1,
+              datasetFunction({
                 firstName: "",
                 lastName: "",
                 email: "",
@@ -149,7 +144,6 @@ function AddMember() {
               });
             } else {
               const tempObject = {
-                slNo: slNo,
                 firstName: firstName,
                 lastName: lastName,
                 email: email,
@@ -161,8 +155,7 @@ function AddMember() {
               const tempDataSet = [...dataSet];
               tempDataSet[editableId] = tempObject;
               setDataSet(tempDataSet);
-              setFunction({
-                slNo: slNo,
+              datasetFunction({
                 firstName: "",
                 lastName: "",
                 email: "",
