@@ -4,7 +4,6 @@ import DropdownElement from "./DropdownElement";
 import StyledPhoneNumber from "./StyledPhoneNumber";
 import TableSection from "./TableSection";
 import { Select } from "antd";
-import { Option } from "antd/es/mentions";
 import { Paper } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
@@ -15,16 +14,52 @@ import { PencilSquare, Trash } from "react-bootstrap-icons";
 import { useEffect, useState } from "react";
 
 function AddMember() {
-  let Department = ["Human Resource", "Developement", "Testing", "Devops"];
-
+  let DepartmentArr = ["Testing", "Developement", "Design", "Human Resource"];
+  let RoleArr = ["Frontend Dev", "Backend Dev", "Testing", "Design"];
+  let TeamArr = ["Team A", "Team B", "Team C", "Team D"];
   // Table
   const [dataSet, setDataSet] = useState([]);
 
-  // edit section
+  // EDIT BUTTON ~~OPTIONAL CHAINING
   const [isEdit, setIsEdit] = useState(0);
   const [editableId, setEditableId] = useState(null);
   const [page, setPage] = useState(1);
-  // optional chaining
+
+  // DELETE BUTTON
+  const deleteItem = (deleterIndex) => {
+    const updatedItems = dataSet.filter((_, index) => index !== deleterIndex);
+    setDataSet(updatedItems);
+  };
+
+  // SORtBY
+  const [sortOrder, setSortOrder] = useState({})
+  const handleSort = (value) => {
+    setSortOrder({
+      order: 'ascend',
+      columnKey: value,
+    });
+  };
+
+  // Search Bar
+  const [searchDataSet, setSearchDataSet] = useState([])
+  const [searchInput, setSerachInput] = useState('');
+  const handleSearch = (e) => {
+    setSerachInput(e.target.value);
+  }
+  useEffect(() => {
+    setSearchDataSet(dataSet.filter((data) => {
+      return (
+        data.firstName.toLowerCase().startsWith(searchInput.toLowerCase()) ||
+        data.lastName.toLowerCase().startsWith(searchInput.toLowerCase()) ||
+        data.email.toLowerCase().startsWith(searchInput.toLowerCase()) ||
+        data.dept.toLowerCase().startsWith(searchInput.toLowerCase()) ||
+        data.role.toLowerCase().startsWith(searchInput.toLowerCase()) ||
+        data.team.toLowerCase().startsWith(searchInput.toLowerCase())
+      )
+    }))
+  }, [searchInput, dataSet])
+
+  // TABLE DATA
   const columns = [
     {
       title: "Sl. No",
@@ -36,12 +71,31 @@ function AddMember() {
       title: "First Name",
       key: "firstName",
       sorter: (a, b) => a.firstName.localeCompare(b.firstName),
+      sortOrder: sortOrder.columnKey === 'firstName' ? sortOrder.order : null,
     },
     { dataIndex: "lastName", title: "Last Name" },
     { dataIndex: "email", title: "Email Address" },
-    { dataIndex: "dept", title: "Department" },
-    { dataIndex: "role", title: "Role" },
-    { dataIndex: "team", title: "Team" },
+    {
+      dataIndex: "dept",
+      title: "Department",
+      key: "dept",
+      sorter: (a, b) => a.dept.localeCompare(b.dept),
+      sortOrder: sortOrder.columnKey === 'dept' ? sortOrder.order : null,
+    },
+    {
+      dataIndex: "role",
+      title: "Role",
+      key: "role",
+      sorter: (a, b) => a.role.localeCompare(b.role),
+      sortOrder: sortOrder.columnKey === 'role' ? sortOrder.order : null,
+    },
+    {
+      dataIndex: "team",
+      title: "Team",
+      key: "team",
+      sorter: (a, b) => a.team.localeCompare(b.team),
+      sortOrder: sortOrder.columnKey === 'team' ? sortOrder.order : null,
+    },
     {
       title: "Action",
       key: "action",
@@ -77,10 +131,6 @@ function AddMember() {
       ),
     },
   ];
-  const deleteItem = (deleterIndex) => {
-    const updatedItems = dataSet.filter((_, index) => index !== deleterIndex);
-    setDataSet(updatedItems);
-  };
   const [
     [firstName, setfirstName],
     [lastName, setlastName],
@@ -186,20 +236,20 @@ function AddMember() {
           />
           <DropdownElement
             label={"Department/BU"}
-            arr={Department}
+            arr={DepartmentArr}
             value={dept}
             setFunction={setDept}
           />
           <DropdownElement
             label={"Role"}
-            arr={Department}
+            arr={RoleArr}
             value={role}
             setFunction={setRole}
           />
           <StyledPhoneNumber phNo={phNo} setPhNo={setPhNo} />
           <DropdownElement
             label={"Team Name"}
-            arr={Department}
+            arr={TeamArr}
             value={team}
             setFunction={setTeam}
           />
@@ -207,7 +257,6 @@ function AddMember() {
         <StyledSubmit type="submit" form="myForm">
           {isEdit ? "Edit Member" : "Add Member"}
         </StyledSubmit>
-
         <hr style={{ margin: "15px 0" }} />
         <div style={{ margin: "0 40px" }}>
           <TableHeader>
@@ -232,27 +281,42 @@ function AddMember() {
                       opacity: "0.8",
                     },
                   }}
+                  onChange={(e) => handleSearch(e)}
                 />
               </Paper>
 
               <div>
-                {/* Actual Select */}
+                {/* ACTUAL SELECT */}
                 <Select
-                  placeholder="Sort By"
-                  size="small"
+                  defaultValue="Sort By"
                   style={{
-                    width: "100px",
+                    width: "95px",
                     fontSize: "5px",
                     position: "absolute",
-                    transform: "translateY(5px)",
                     opacity: "0",
                     zIndex: "1",
                   }}
-                >
-                  <Option value="1">Name</Option>
-                  <Option value="2">Position</Option>
-                  <Option value="3">Department</Option>
-                </Select>
+                  value={null}
+                  onChange={handleSort}
+                  options={[
+                    {
+                      value: 'firstName',
+                      label: 'Name',
+                    },
+                    {
+                      value: 'dept',
+                      label: 'Department',
+                    },
+                    {
+                      value: 'role',
+                      label: 'Role',
+                    },
+                    {
+                      value: 'team',
+                      label: 'Team',
+                    }
+                  ]}
+                />
 
                 {/* Display Select */}
                 <Paper component="form" sx={paperStyle}>
@@ -277,7 +341,7 @@ function AddMember() {
             </SerachDiv>
           </TableHeader>
 
-          <TableSection send={dataSet} columns={columns} setPage={setPage} />
+          <TableSection send={(searchDataSet) ? searchDataSet : dataSet} columns={columns} setPage={setPage} />
         </div>
       </SubDiv>
     </MainDiv>

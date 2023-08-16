@@ -24,7 +24,7 @@ function DropdownElement({ label, arr, value, setFunction }) {
         fullWidth
         size="small"
         select
-      // required
+      required
       >
         {arr.map((ele, id) => (
           <MenuItem value={id}>{ele}</MenuItem>

@@ -15,7 +15,7 @@ function InputField({ label, value, setFunction, type }) {
         onChange={(e) => {
           (setFunction) ? setFunction(e.target.value) : setInputValue(e.target.value);
         }}
-      // required
+        required
       ></StyledTextField>
     </Box>
   );
