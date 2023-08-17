@@ -31,7 +31,7 @@ function AddMember() {
     setDataSet(updatedItems);
   };
 
-  // SORtBY
+  // SORT BY
   const [sortOrder, setSortOrder] = useState({})
   const handleSort = (value) => {
     setSortOrder({
@@ -47,16 +47,24 @@ function AddMember() {
     setSerachInput(e.target.value);
   }
   useEffect(() => {
-    setSearchDataSet(dataSet.filter((data) => {
-      return (
-        data.firstName.toLowerCase().startsWith(searchInput.toLowerCase()) ||
-        data.lastName.toLowerCase().startsWith(searchInput.toLowerCase()) ||
-        data.email.toLowerCase().startsWith(searchInput.toLowerCase()) ||
-        data.dept.toLowerCase().startsWith(searchInput.toLowerCase()) ||
-        data.role.toLowerCase().startsWith(searchInput.toLowerCase()) ||
-        data.team.toLowerCase().startsWith(searchInput.toLowerCase())
+    setSearchDataSet(
+      // dataSet.filter((data) => {
+      //     return (
+      //       data.firstName.toLowerCase().startsWith(searchInput.toLowerCase()) ||
+      //       data.lastName.toLowerCase().startsWith(searchInput.toLowerCase()) ||
+      //       data.email.toLowerCase().startsWith(searchInput.toLowerCase()) ||
+      //       data.dept.toLowerCase().startsWith(searchInput.toLowerCase()) ||
+      //       data.role.toLowerCase().startsWith(searchInput.toLowerCase()) ||
+      //       data.team.toLowerCase().startsWith(searchInput.toLowerCase())
+      //     )
+      // })
+      
+      dataSet.filter(item =>
+        ['firstName', 'role', 'team', 'dept'].some(prop =>
+          item[prop].toLowerCase().startsWith(searchInput.toLowerCase())
+        )
       )
-    }))
+    )
   }, [searchInput, dataSet])
 
   // TABLE DATA

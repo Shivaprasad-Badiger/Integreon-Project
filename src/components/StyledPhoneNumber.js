@@ -3,7 +3,7 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { styled } from "styled-components";
 
-function StyledPhoneNumber({phNo, setPhNo}) {
+function StyledPhoneNumber({ phNo, setPhNo }) {
 
   const inputStyle = {
     width: "100%",
@@ -25,12 +25,13 @@ function StyledPhoneNumber({phNo, setPhNo}) {
       <PhoneInput
         country={"in"}
         onChange={(num) => {
-          setPhNo(num);
+          setPhNo && setPhNo(num);
         }}
         value={phNo}
         placeholder="Mobile Number"
         inputProps={{
           style: inputStyle,
+          required: true
         }}
         buttonStyle={flagStyle}
       />
@@ -40,6 +41,7 @@ function StyledPhoneNumber({phNo, setPhNo}) {
 }
 
 export default StyledPhoneNumber;
+
 const Span = styled.span`
   position: absolute;
   font-size: 12px;

@@ -42,9 +42,9 @@ const SideBar = ({ validate }) => {
               width: width,
               boxSizing: "border-box",
               display: "block",
-              // overflow: "hidden",
               height: "90vh",
               marginTop: "10vh",
+              overflow: "hidden"
             },
           }}
           variant="persistent"
