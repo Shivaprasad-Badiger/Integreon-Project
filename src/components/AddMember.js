@@ -48,17 +48,6 @@ function AddMember() {
   }
   useEffect(() => {
     setSearchDataSet(
-      // dataSet.filter((data) => {
-      //     return (
-      //       data.firstName.toLowerCase().startsWith(searchInput.toLowerCase()) ||
-      //       data.lastName.toLowerCase().startsWith(searchInput.toLowerCase()) ||
-      //       data.email.toLowerCase().startsWith(searchInput.toLowerCase()) ||
-      //       data.dept.toLowerCase().startsWith(searchInput.toLowerCase()) ||
-      //       data.role.toLowerCase().startsWith(searchInput.toLowerCase()) ||
-      //       data.team.toLowerCase().startsWith(searchInput.toLowerCase())
-      //     )
-      // })
-      
       dataSet.filter(item =>
         ['firstName', 'role', 'team', 'dept'].some(prop =>
           item[prop].toLowerCase().startsWith(searchInput.toLowerCase())

@@ -7,16 +7,21 @@ import image1 from "./image/integreon-hero-image.png";
 import squareBack from "./image/BackSquare.png";
 import cornerImg from "./image/corner.png";
 import Validation from "./Validation";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { setEmailRed } from "./redux/action";
+import { useDispatch } from "react-redux";
 
-
-const Content = ({handleValidate}) => {
+const Content = ({ handleValidate }) => {
   // login submit
   const [stepOne, setStepOne] = useState(0);
   const Navigate = useNavigate();
   const loginVerification = () => {
     setStepOne(1);
   };
+
+
+  // redux
+  const dispatch = useDispatch();
   // login verification
   const [details, setDetails] = useState({ email: "", password: "" });
   const emailValue = (e) => {
@@ -29,21 +34,16 @@ const Content = ({handleValidate}) => {
     details.email === "abc@gmail.com" && details.password === "123"
       ? loginVerification()
       : alert("Invalid email and password");
+    dispatch(setEmailRed(details?.email))
   };
+
+
   // otp verification
-  const [OTP, setOTP] = useState("");
-  const otpValue = (e, id) => {
-    setOTP(OTP + e.target.value);
-    const value = e.target.value;
-    if (value.length === 1) {
-      const nextInput = document.getElementById(`${id+1}`);
-    if(nextInput)
-      nextInput.focus();
-    }
-  };
+  const [OTP, setOTP] = useState([]);
   const OTPSubmitHandler = () => {
     if (OTP === "12345") {
-      handleValidate(true);
+      localStorage.setItem("validate", JSON.stringify(true));
+      handleValidate(JSON.parse(localStorage.getItem("validate")));
       Navigate("/UserProfile");
     }
     else alert("Invalid OTP");
@@ -71,7 +71,7 @@ const Content = ({handleValidate}) => {
             passwordValue={passwordValue}
           />
         ) : (
-          <Validation otpHandleSubmit={OTPSubmitHandler} otpValue={otpValue} />
+          <Validation otpHandleSubmit={OTPSubmitHandler} OTP={OTP} setOTP={setOTP} />
         )}
       </RightDiv>
     </MainDiv>

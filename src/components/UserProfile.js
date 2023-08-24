@@ -6,6 +6,7 @@ import DropdownElement from "./DropdownElement";
 import ToggleOffIcon from "@mui/icons-material/ToggleOffOutlined";
 import ToggleOnIcon from "@mui/icons-material/ToggleOn";
 import StyledPhoneNumber from "./StyledPhoneNumber";
+import { useSelector } from "react-redux";
 
 function UserProfile() {
   // workLocation
@@ -28,6 +29,8 @@ function UserProfile() {
     setToggleState(!toggleState);
     e.preventDefault();
   };
+  // Redux
+const emailVal = useSelector((state)=>state.emailValRed);
 
   return (
     <div style={{ display: "flex", width: "100%" }}>
@@ -44,7 +47,7 @@ function UserProfile() {
             <InputField label={"Last Name"} />
             <ImageIcon />
             <InputField label={"Role"} />
-            <InputField label={"Email Address"} />
+            <InputField label={"Email Address"} value={emailVal} />
             <DropdownElement label={"Work Location"} arr={workLocations} />
             <StyledPhoneNumber />
             <div >

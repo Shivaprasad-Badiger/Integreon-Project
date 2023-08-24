@@ -1,8 +1,10 @@
 import React from "react";
 import { styled } from "styled-components";
 import WestIcon from "@mui/icons-material/West";
+import OtpInput from 'react-otp-input';
 
-function Validation({ otpHandleSubmit, otpValue }) {
+
+function Validation({ otpHandleSubmit, OTP, setOTP }) {
   return (
     <MainDiv>
       <SubDiv>
@@ -12,11 +14,30 @@ function Validation({ otpHandleSubmit, otpValue }) {
           <span style={{ color: "#b42597" }}> richard@integreon.com</span>
         </Paragraph>
         <InputDiv>
-          <StyledInput type="text" pattern="[0-9]" maxLength={1} id="1" onChange={(e) => {otpValue(e, 1)}} autoFocus/>
+          {/* <StyledInput type="text" pattern="[0-9]" maxLength={1} id="1" onChange={(e) => {otpValue(e, 1)}} autoFocus/>
           <StyledInput type="text" pattern="[0-9]" maxLength={1} id="2" onChange={(e) => {otpValue(e, 2)}} />
           <StyledInput type="text" pattern="[0-9]" maxLength={1} id="3" onChange={(e) => {otpValue(e, 3)}} />
           <StyledInput type="text" pattern="[0-9]" maxLength={1} id="4" onChange={(e) => {otpValue(e, 4)}} />
-          <StyledInput type="text" pattern="[0-9]" maxLength={1} id="5" onChange={(e) => {otpValue(e, 5)}} />
+          <StyledInput type="text" pattern="[0-9]" maxLength={1} id="5" onChange={(e) => {otpValue(e, 5)}} /> */}
+
+          <OtpInput
+            value={OTP}
+            onChange={setOTP}
+            numInputs={5}
+            renderSeparator={<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>}
+            renderInput={(props) => <input {...props} />}
+            shouldAutoFocus
+            inputStyle={{
+              height: "55px",
+              width: "70px",
+              gap:"20px",
+              borderRadius: "10px",
+              border:"2px solid #d8d8d8",
+              fontSize:"30px",
+              color:"#124966"
+            }}
+          />
+
         </InputDiv>
         <Button onClick={() => otpHandleSubmit()}>Verify & Login</Button>
         <BottomDiv>
@@ -69,7 +90,7 @@ const Paragraph = styled.p`
 `;
 const InputDiv = styled.div`
   display: block;
-  justify-content: flex-start;
+  justify-content: center;
   display: flex;
   gap: 20px;
   margin: 20px;
