@@ -1,7 +1,7 @@
 import React from "react";
 import { Table } from "antd";
 
-const TableSection = ({ send, columns, setPage }) => {
+const TableSection = ({ data, columns, setPage }) => {
   return (
     <Table
       size="small"
@@ -15,7 +15,7 @@ const TableSection = ({ send, columns, setPage }) => {
         },
       }}
       columns={columns}
-      dataSource={send}
+      dataSource={data}
     />
   );
 };

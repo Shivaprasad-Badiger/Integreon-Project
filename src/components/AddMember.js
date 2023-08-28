@@ -338,7 +338,7 @@ function AddMember() {
             </SerachDiv>
           </TableHeader>
 
-          <TableSection send={(searchDataSet) ? searchDataSet : dataSet} columns={columns} setPage={setPage} />
+          <TableSection data={(searchDataSet) ? searchDataSet : dataSet} columns={columns} setPage={setPage} />
         </div>
       </SubDiv>
     </MainDiv>

@@ -1,5 +1,5 @@
 export const setEmailRed = (email) => ({
-    type: 'SET_EMAIL',
+    type: 'SET_DATA',
     payload: email,
   });
  
