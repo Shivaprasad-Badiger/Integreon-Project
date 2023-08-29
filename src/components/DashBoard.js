@@ -3,7 +3,9 @@ import DonutComponent1 from "./dashBoardComps/DonutComponent1";
 import { styled } from "styled-components";
 import TableSection from "./TableSection";
 import ColumnChart from "./dashBoardComps/ColumnChart";
-import { Border } from "react-bootstrap-icons";
+import DonutComponent2 from "./dashBoardComps/DonutComponent2";
+import DonutComponent3 from "./dashBoardComps/DonutComponent3";
+import TuneIcon from '@mui/icons-material/Tune';
 
 function DashBoard() {
   const columns = [
@@ -33,51 +35,40 @@ function DashBoard() {
     },
   ];
   return (
-    <div style={{ marginLeft: "4%", backgroundColor: '#fafafa', height: '90vh' }}>
-      <span> Dahboard Overview </span>
+    <div
+      style={{ marginLeft: "4%", backgroundColor: "#f5f5f5", height: '89vh'}}
+    >
+      <p style={{margin: '5px 20px', color: '#9fa1a2', fontSize: '14px'}}> Dahboard&nbsp; &gt; &nbsp;  Overview </p>
       <DonutChartDiv>
         <DonutComponent1 />
-        <DonutComponent1 />
-        <DonutComponent1 />
+        <DonutComponent2 />
+        <DonutComponent2 />
         <DonutComponent1 />
       </DonutChartDiv>
       <MainDiv style={{ display: "flex", gap: "20px" }}>
-        <div style={{ width: "70%" }}>
-          <header style={{ display: "flex", justifyContent: "space-between", marginBottom: '10px' }}>
-            <div>
+        <LeftDiv>
+          <StyledHeader>
+            <ButtonDiv1>
               <StyledButton>1W</StyledButton>
               <StyledButton>1M</StyledButton>
               <StyledButton>6M</StyledButton>
               <StyledButton>1Y</StyledButton>
-            </div>
-            <div style={{
-              backgroundColor: '#f0f0f0',
-              border: 'none',
-              padding: '0 10px',
-              borderRadius: '30px',
-              height: '20px'
-            }}>
+            </ButtonDiv1>
+            <ButtonDiv2>
               <StyledButton2>Total Requests</StyledButton2>
               <StyledButton2>E-Receipts</StyledButton2>
               <StyledButton2>E-Approvals</StyledButton2>
-            </div>
+            </ButtonDiv2>
             <div>
-              <StyledButton>♟️FilterBy</StyledButton>
+              <StyledButton><TuneIcon fontSize="small"/> &nbsp; &nbsp; FilterBy</StyledButton>
             </div>
-          </header>
+          </StyledHeader>
           <TableSection columns={columns} />
-        </div>
-        <div
-          style={{
-            width: "30%",
-            display: "flex",
-            flexDirection: "column",
-            gap: "20px",
-          }}
-        >
+        </LeftDiv>
+        <RightDiv>
           <ColumnChart />
-          <DonutComponent1 />
-        </div>
+          <DonutComponent3 />
+        </RightDiv>
       </MainDiv>
     </div>
   );
@@ -91,22 +82,51 @@ const DonutChartDiv = styled.div`
   grid-template-rows: repeat(1, 15vh);
   column-gap: 70px;
   margin: 0 20px;
+  height: fit-content;
 `;
 const MainDiv = styled.div`
-  margin: 20px 20px;
+  margin: 20px;
+`;
+const StyledHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 `;
 const StyledButton = styled.button`
-background-color: white;
-border: none;
-padding: 2px;
-margin: 2px;
+  background-color: white;
+  border: 1px solid #d5d5d5;
+  width: fit-content;
+  display: flex;
+  align-items: center;
 `;
 
 const StyledButton2 = styled.button`
   border: none;
   padding: 0 10px;
-  &:hover{
+  &:hover {
     background-color: white;
     border-radius: 30px;
+    height: 25px;
   }
+`;
+const ButtonDiv1 = styled.div`
+  display: flex;
+`;
+const ButtonDiv2 = styled.div`
+  background-color: #eaeaea;
+  border: none;
+  padding: 0 2.5px;
+  border-radius: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+`;
+const LeftDiv = styled.div`
+  width: 70%;
+`;
+const RightDiv = styled.div`
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `;

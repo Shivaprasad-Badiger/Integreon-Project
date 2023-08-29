@@ -1,21 +1,18 @@
 import React from "react";
 import Chart from "react-apexcharts";
 
-function DonutComponent1() {
+function DonutComponent3() {
   return (
-    <div >
+    <div>
       <Chart
       style={{
         border: '1px solid #d5d5d5'
       }}
         options={{
-          labels: ["E-Receipts", "E-Approvals", "Unindentified"],
+          labels: ["E-Receipts", "E-Approvals"],
           title: {
-            text: "Total Requests",
-            align: "right",
-            margin: -10,
-            offsetY: 15,
-            offsetX: -30,
+            text: "Unmatched Requests",
+            align: 'left',
             style: {
               fontSize: 13,
               fontWeight: 600,
@@ -24,18 +21,13 @@ function DonutComponent1() {
           },
           legend: {
             show: true,
-            position: "right",
-            fontSize: "10px",
+            offsetY: 30,
+            offsetX: 30,
             formatter: (seriesName, opts) => {
               return [
                 seriesName,
-                "   ",
                 opts.w.globals.series[opts.seriesIndex],
               ];
-            },
-            itemMargin: {
-              horizontal: 25,
-              vertical: 0,
             },
           },
           dataLabels: {
@@ -49,22 +41,16 @@ function DonutComponent1() {
                 labels: {
                   show: true,
                   name: {
-                    show: true,
-                    fontSize: "22px",
-                    fontFamily: "Helvetica, Arial, sans-serif",
-                    fontWeight: 600,
-                    offsetY: -10,
+                    show: false,
                   },
                   value: {
                     show: true,
                     fontSize: "16px",
                     fontFamily: "Helvetica, Arial, sans-serif",
                     fontWeight: 600,
-                    offsetY: -10,
                   },
                   total: {
                     show: true,
-                    label: "",
                     showAlways: true,
                   },
                 },
@@ -76,14 +62,16 @@ function DonutComponent1() {
             background: "#FFFFFF",
 						
           },
+          colors: ['#ed7d39', '#ffd622']
         }}
-        series={[55, 44, 11]}
+        series={[6, 4]}
         type="donut"
         width="100%"
         height="100%"
+        
       />
     </div>
   );
 }
 
-export default DonutComponent1;
+export default DonutComponent3;
