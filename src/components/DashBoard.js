@@ -5,9 +5,10 @@ import TableSection from "./TableSection";
 import ColumnChart from "./dashBoardComps/ColumnChart";
 import DonutComponent2 from "./dashBoardComps/DonutComponent2";
 import DonutComponent3 from "./dashBoardComps/DonutComponent3";
-import TuneIcon from '@mui/icons-material/Tune';
+import TuneIcon from "@mui/icons-material/Tune";
 
 function DashBoard() {
+  // Table
   const columns = [
     {
       title: "Request No",
@@ -36,9 +37,19 @@ function DashBoard() {
   ];
   return (
     <div
-      style={{ marginLeft: "4%", backgroundColor: "#f5f5f5", height: '89vh'}}
+      style={{ marginLeft: "4%", backgroundColor: "#f5f5f5", height: "89vh" }}
     >
-      <p style={{margin: '5px 20px', color: '#9fa1a2', fontSize: '14px'}}> Dahboard&nbsp; &gt; &nbsp;  Overview </p>
+      <span
+        style={{
+          display: "block",
+          padding: "5px 20px",
+          color: "#9fa1a2",
+          fontSize: "14px",
+        }}
+      >
+        {" "}
+        Dahboard&nbsp; &gt; &nbsp; Overview{" "}
+      </span>
       <DonutChartDiv>
         <DonutComponent1 />
         <DonutComponent2 />
@@ -60,7 +71,9 @@ function DashBoard() {
               <StyledButton2>E-Approvals</StyledButton2>
             </ButtonDiv2>
             <div>
-              <StyledButton><TuneIcon fontSize="small"/> &nbsp; &nbsp; FilterBy</StyledButton>
+              <StyledButton>
+                <TuneIcon fontSize="small" /> &nbsp; &nbsp; FilterBy
+              </StyledButton>
             </div>
           </StyledHeader>
           <TableSection columns={columns} />
@@ -77,12 +90,10 @@ function DashBoard() {
 export default DashBoard;
 
 const DonutChartDiv = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(1, 15vh);
+  display: flex;
+  height: 15vh;
   column-gap: 70px;
   margin: 0 20px;
-  height: fit-content;
 `;
 const MainDiv = styled.div`
   margin: 20px;

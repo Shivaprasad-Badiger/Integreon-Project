@@ -11,7 +11,6 @@ function ImageIcon() {
       setImageSrc(imageUrl);
     }
   };
-
   return (
     <MainDiv>
       <ImageDiv>

@@ -6,7 +6,10 @@ function DonutComponent1() {
     <div >
       <Chart
       style={{
-        border: '1px solid #d5d5d5'
+        border: '1px solid #d5d5d5',
+        borderRadius: '5px',
+        backgroundColor: '#ffffff'
+
       }}
         options={{
           labels: ["E-Receipts", "E-Approvals", "Unindentified"],
@@ -73,8 +76,6 @@ function DonutComponent1() {
           },
           chart: {
             type: "donut",
-            background: "#FFFFFF",
-						
           },
         }}
         series={[55, 44, 11]}

@@ -10,7 +10,8 @@ function DonutComponent2() {
           position: "absolute",
           height: "60px",
           border: "1px solid #d5d5d5",
-          transform: "translateY(25px)",
+          transform: "translateY(25px) translateX(-2px)",
+          borderRadius: '5px'
         }}
       ></div>
       <div
@@ -19,7 +20,7 @@ function DonutComponent2() {
           position: "absolute",
           height: "110px",
           border: "1px solid #d5d5d5",
-          transform: "translateY(2px) translateX(5px)",
+          transform: "translateY(2px) translateX(2px)",
           borderRadius: "100px",
           backgroundColor: "white",
         }}
@@ -29,8 +30,9 @@ function DonutComponent2() {
           width: "309px",
           position: "absolute",
           height: "59.8px",
-          transform: "translateY(25.8px) translateX(1px)",
+          transform: "translateY(25.8px) translateX(-1px)",
           backgroundColor: "white",
+          borderRadius: '5px'
         }}
       ></div>
 
@@ -38,7 +40,7 @@ function DonutComponent2() {
         options={{
           labels: ["I-129", "I-129S", "I-140"],
           title: {
-            text: "Total Requests",
+            text: "E-Approvals",
             align: "center",
             margin: -10,
             offsetY: 35,
@@ -49,6 +51,7 @@ function DonutComponent2() {
               color: "#800080",
             },
           },
+          colors:['#03599e','#88d9d8','#9bb1b4'],
           legend: {
             show: true,
             position: "bottom",
@@ -69,7 +72,7 @@ function DonutComponent2() {
           },
           plotOptions: {
             pie: {
-              customScale: 3.5,
+              customScale: 3.3,
               expandOnClick: false,
               offsetX: -100,
               offsetY: 35,
