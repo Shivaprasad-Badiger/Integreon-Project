@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Box, TextField } from "@mui/material";
 
-function InputField({ label, setFunction}) {
+function InputField({ label, value, setFunction, type }) {
+  const [inputValue, setInputValue] = useState("");
   return (
     <Box sx={{ width: "100%" }}>
       <StyledTextField
         label={label}
         fullWidth
         size="small"
+        type={type}
+        value={(value) ? value : inputValue}
         onChange={(e) => {
-          setFunction(e.target.value);
+          (setFunction) ? setFunction(e.target.value) : setInputValue(e.target.value);
         }}
-        // required
+        required
       ></StyledTextField>
     </Box>
   );

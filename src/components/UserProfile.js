@@ -6,6 +6,7 @@ import DropdownElement from "./DropdownElement";
 import ToggleOffIcon from "@mui/icons-material/ToggleOffOutlined";
 import ToggleOnIcon from "@mui/icons-material/ToggleOn";
 import StyledPhoneNumber from "./StyledPhoneNumber";
+import { useSelector } from "react-redux";
 
 function UserProfile() {
   // workLocation
@@ -28,6 +29,8 @@ function UserProfile() {
     setToggleState(!toggleState);
     e.preventDefault();
   };
+  // Redux
+const emailVal = useSelector((state)=>state.emailValRed);
 
   return (
     <div style={{ display: "flex", width: "100%" }}>
@@ -40,17 +43,17 @@ function UserProfile() {
             <span>Profile Info</span>
           </StyledSpan2>
           <FormDiv>
-            <InputField label={"First Name"}/>
+            <InputField label={"First Name"} />
             <InputField label={"Last Name"} />
             <ImageIcon />
             <InputField label={"Role"} />
-            <InputField label={"Email Address"}/>
-            <DropdownElement label={"Work Location"} arr={workLocations}/>
-            <StyledPhoneNumber/>
+            <InputField label={"Email Address"} value={emailVal} />
+            <DropdownElement label={"Work Location"} arr={workLocations} />
+            <StyledPhoneNumber />
             <div >
               <DropdownElement label={"Time Zone"} arr={timeZones} />
               <TimeZoneDiv>
-                <p style={{margin: "0"}}>Adjust for daylight saving mode automatically</p>
+                <p style={{ margin: "0" }}>Adjust for daylight saving mode automatically</p>
                 <ToggleButton onClick={toggleIcon}>--</ToggleButton>
                 <ToggleSpan>
                   {toggleState ? (

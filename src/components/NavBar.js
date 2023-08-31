@@ -16,8 +16,8 @@ const Navbar = ({ validate, handleValidate }) => {
   const Navigate = useNavigate();
   const logoutHandler = () => {
     Navigate("/");
-    handleValidate(false);
     localStorage.setItem("validate", JSON.stringify(false));
+    handleValidate(JSON.parse(localStorage.getItem("validate")));
   };
   const profileHandler = () =>{
     Navigate("/UserProfile")

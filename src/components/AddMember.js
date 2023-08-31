@@ -1,11 +1,9 @@
-import React from "react";
 import { styled } from "styled-components";
 import InputField from "./InputField";
 import DropdownElement from "./DropdownElement";
 import StyledPhoneNumber from "./StyledPhoneNumber";
 import TableSection from "./TableSection";
 import { Select } from "antd";
-import { Option } from "antd/es/mentions";
 import { Paper } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
@@ -13,67 +11,159 @@ import { InputBase } from "@mui/material";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import { Space } from "antd";
 import { PencilSquare, Trash } from "react-bootstrap-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function AddMember() {
-  let Department = ["Human Resource", "Developement", "Testing", "Devops"];
-
+  let DepartmentArr = ["Testing", "Developement", "Design", "Human Resource"];
+  let RoleArr = ["Frontend Dev", "Backend Dev", "Testing", "Design"];
+  let TeamArr = ["Team A", "Team B", "Team C", "Team D"];
   // Table
+  const [dataSet, setDataSet] = useState([]);
+
+  // EDIT BUTTON ~~OPTIONAL CHAINING
+  const [isEdit, setIsEdit] = useState(0);
+  const [editableId, setEditableId] = useState(null);
+  const [page, setPage] = useState(1);
+
+  // DELETE BUTTON
+  const deleteItem = (deleterIndex) => {
+    const updatedItems = dataSet.filter((_, index) => index !== deleterIndex);
+    setDataSet(updatedItems);
+  };
+
+  // SORT BY
+  const [sortOrder, setSortOrder] = useState({})
+  const handleSort = (value) => {
+    setSortOrder({
+      order: 'ascend',
+      columnKey: value,
+    });
+  };
+
+  // Search Bar
+  const [searchDataSet, setSearchDataSet] = useState([])
+  const [searchInput, setSerachInput] = useState('');
+  const handleSearch = (e) => {
+    setSerachInput(e.target.value);
+  }
+  useEffect(() => {
+    setSearchDataSet(
+      dataSet.filter(item =>
+        ['firstName', 'role', 'team', 'dept'].some(prop =>
+          item[prop].toLowerCase().startsWith(searchInput.toLowerCase())
+        )
+      )
+    )
+  }, [searchInput, dataSet])
+
+  // TABLE DATA
   const columns = [
-    { dataIndex: "slNo", title: "Sl. No" },
+    {
+      title: "Sl. No",
+      key: "slNo",
+      render: (_, __, index) => (page - 1) * 4 + index + 1,
+    },
     {
       dataIndex: "firstName",
       title: "First Name",
       key: "firstName",
       sorter: (a, b) => a.firstName.localeCompare(b.firstName),
+      sortOrder: sortOrder.columnKey === 'firstName' ? sortOrder.order : null,
     },
     { dataIndex: "lastName", title: "Last Name" },
     { dataIndex: "email", title: "Email Address" },
-    { dataIndex: "department", title: "Department" },
-    { dataIndex: "role", title: "Role" },
-    { dataIndex: "team", title: "Team" },
+    {
+      dataIndex: "dept",
+      title: "Department",
+      key: "dept",
+      sorter: (a, b) => a.dept.localeCompare(b.dept),
+      sortOrder: sortOrder.columnKey === 'dept' ? sortOrder.order : null,
+    },
+    {
+      dataIndex: "role",
+      title: "Role",
+      key: "role",
+      sorter: (a, b) => a.role.localeCompare(b.role),
+      sortOrder: sortOrder.columnKey === 'role' ? sortOrder.order : null,
+    },
+    {
+      dataIndex: "team",
+      title: "Team",
+      key: "team",
+      sorter: (a, b) => a.team.localeCompare(b.team),
+      sortOrder: sortOrder.columnKey === 'team' ? sortOrder.order : null,
+    },
     {
       title: "Action",
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <StyledButton>
+          <StyledButton
+            onClick={(e) => {
+              e.preventDefault();
+              setIsEdit(1);
+              dataSet.forEach((data, index) => {
+                if (data.email === record.email) {
+                  setEditableId(index);
+                }
+              });
+              datasetFunction(record);
+            }}
+          >
             <PencilSquare color="#88dad8" fontSize="20px" />
           </StyledButton>
-          <StyledButton>
+          <StyledButton
+            onClick={(e) => {
+              e.preventDefault();
+              dataSet.forEach((data, index) => {
+                if (data.email === record.email) {
+                  deleteItem(index);
+                }
+              });
+            }}
+          >
             <Trash color="#ff0000" fontSize="20px" />
           </StyledButton>
         </Space>
       ),
     },
   ];
-
   const [
     [firstName, setfirstName],
     [lastName, setlastName],
     [email, setEmail],
     [dept, setDept],
     [role, setRole],
+    [phNo, setPhNo],
     [team, setTeam],
   ] = [
-    useState(""),
-    useState(""),
-    useState(""),
-    useState(""),
-    useState(""),
-    useState(""),
-  ];
- 
+      useState(""),
+      useState(""),
+      useState(""),
+      useState(""),
+      useState(""),
+      useState(""),
+      useState(""),
+    ];
+  const datasetFunction = (setValues) => {
+    setfirstName(setValues.firstName);
+    setlastName(setValues.lastName);
+    setEmail(setValues.email);
+    setDept(setValues.dept);
+    setRole(setValues.role);
+    setPhNo(setValues.phNo);
+    setTeam(setValues.team);
+  };
+
   let data = {
-    slNo: "1",
     firstName: firstName,
     lastName: lastName,
     email: email,
-    department: dept,
+    dept: dept,
     role: role,
+    phNo: phNo,
     team: team,
   };
-  const [dataSet, setDataSet] = useState([]);
 
   return (
     <MainDiv>
@@ -88,33 +178,82 @@ function AddMember() {
           id="myForm"
           onSubmit={(e) => {
             e.preventDefault();
-            setDataSet([...dataSet, data]);
+            if (!isEdit) {
+              setDataSet([...dataSet, data]);
+              datasetFunction({
+                firstName: "",
+                lastName: "",
+                email: "",
+                dept: "",
+                role: "",
+                phNo: "91",
+                team: "",
+              });
+            } else {
+              const tempObject = {
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                dept: dept,
+                role: role,
+                phNo: phNo,
+                team: team,
+              };
+              const tempDataSet = [...dataSet];
+              tempDataSet[editableId] = tempObject;
+              setDataSet(tempDataSet);
+              datasetFunction({
+                firstName: "",
+                lastName: "",
+                email: "",
+                dept: "",
+                role: "",
+                phNo: "91",
+                team: "",
+              });
+              setIsEdit(!isEdit);
+            }
           }}
         >
-          <InputField label={"First Name"} setFunction={setfirstName} />
-          <InputField label={"Last Name"} setFunction={setlastName} />
-          <InputField label={"Email"} setFunction={setEmail} />
+          <InputField
+            label={"First Name"}
+            value={firstName}
+            setFunction={setfirstName}
+          />
+          <InputField
+            label={"Last Name"}
+            value={lastName}
+            setFunction={setlastName}
+          />
+          <InputField
+            label={"Email"}
+            value={email}
+            setFunction={setEmail}
+            type={"email"}
+          />
           <DropdownElement
             label={"Department/BU"}
-            arr={Department}
+            arr={DepartmentArr}
+            value={dept}
             setFunction={setDept}
           />
           <DropdownElement
             label={"Role"}
-            arr={Department}
+            arr={RoleArr}
+            value={role}
             setFunction={setRole}
           />
-          <StyledPhoneNumber />
+          <StyledPhoneNumber phNo={phNo} setPhNo={setPhNo} />
           <DropdownElement
             label={"Team Name"}
-            arr={Department}
+            arr={TeamArr}
+            value={team}
             setFunction={setTeam}
           />
         </FormDiv>
         <StyledSubmit type="submit" form="myForm">
-          Add Member
+          {isEdit ? "Edit Member" : "Add Member"}
         </StyledSubmit>
-
         <hr style={{ margin: "15px 0" }} />
         <div style={{ margin: "0 40px" }}>
           <TableHeader>
@@ -139,27 +278,42 @@ function AddMember() {
                       opacity: "0.8",
                     },
                   }}
+                  onChange={(e) => handleSearch(e)}
                 />
               </Paper>
 
               <div>
-                {/* Actual Select */}
+                {/* ACTUAL SELECT */}
                 <Select
-                  placeholder="Sort By"
-                  size="small"
+                  defaultValue="Sort By"
                   style={{
-                    width: "100px",
+                    width: "95px",
                     fontSize: "5px",
                     position: "absolute",
-                    transform: "translateY(5px)",
                     opacity: "0",
                     zIndex: "1",
                   }}
-                >
-                  <Option value="1">Name</Option>
-                  <Option value="2">Position</Option>
-                  <Option value="3">Department</Option>
-                </Select>
+                  value={null}
+                  onChange={handleSort}
+                  options={[
+                    {
+                      value: 'firstName',
+                      label: 'Name',
+                    },
+                    {
+                      value: 'dept',
+                      label: 'Department',
+                    },
+                    {
+                      value: 'role',
+                      label: 'Role',
+                    },
+                    {
+                      value: 'team',
+                      label: 'Team',
+                    }
+                  ]}
+                />
 
                 {/* Display Select */}
                 <Paper component="form" sx={paperStyle}>
@@ -184,7 +338,7 @@ function AddMember() {
             </SerachDiv>
           </TableHeader>
 
-          <TableSection send={dataSet} columns={columns} />
+          <TableSection data={(searchDataSet) ? searchDataSet : dataSet} columns={columns} setPage={setPage} />
         </div>
       </SubDiv>
     </MainDiv>
